@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pw06
+      MYSQL_USER: karolis
+      MYSQL_PASSWORD: root
+
+  pw06-backend:
+    build: ./pw06-backend
+    container_name: pw06-backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql-db
+
+volumes:
+  mysql-data:

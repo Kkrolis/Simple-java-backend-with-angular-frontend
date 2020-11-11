@@ -1,0 +1,121 @@
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+             <th scope="col">Id</th>
+             <th scope="col">Nuo kada galioje kaina</th>
+             <th scope="col">Kambario kaina darbo dienomis</th>
+             <th scope="col">Kambario kaina savaitgaliais</th>
+             <th scope="col">Kambario tipas</th>
+         </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let priceList of priceLists" (click)="selectItem(priceList)">
+            <td scope="row">{{ priceList.id }}</td>
+            <td>{{ priceList.datePriceIsValidFrom}}</td>
+            <td>{{ priceList.roomPriceWorkDays }}</td>
+            <td>{{ priceList.roomPriceHolidays }}</td>
+            <td>{{ priceList.roomType }}</td>
+        </tr>
+        </tbody>
+    </table>
+ 
+</div>
+<mat-tab-group>
+<mat-tab label="Prideti kainorasti">
+    <div>
+        <form class="shadow p-3 mb-5 rounded">
+            <div class="form-group row">
+                <label for="datePriceIsValidFrom" class="col-sm-3 col-form-label">Nuo kada galioje kaina</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="datePriceIsValidFrom" #datePriceIsValidFrom>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomPriceWorkDays" class="col-sm-3 col-form-label">Kambario kaina darbo dienomis<</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id=roomPriceWorkDays #roomPriceWorkDays>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomPriceHolidays" class="col-sm-3 col-form-label">Kambario kaina savaitgaliais</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="roomPriceHolidays" rows="3" #roomPriceHolidays>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomType" class="col-sm-3 col-form-label">Kambario tipas</label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control" id="roomType" #roomType>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary mb-2 float-right" (click)="addPriceList(datePriceIsValidFrom.value, roomPriceHolidays.value, roomPriceWorkDays.value, roomType.value)">Prideti</button>
+                </div>
+            </div> 
+        </form>
+    </div>
+</mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+        Atnaujinti kainorasti
+    </ng-template>
+    <div>
+        <form class="shadow p-3 mb-5 rounded">
+            <div class="form-group row">
+                <label for="datePriceIsValidFromU" class="col-sm-3 col-form-label">Nuo kada galioje kaina</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="datePriceIsValidFromU" #datePriceIsValidFromU value="{{selectedItem.datePriceIsValidFrom}}">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomPriceWorkDaysU" class="col-sm-3 col-form-label">Kambario kaina darbo dienomis<</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id=roomPriceWorkDaysU #roomPriceWorkDaysU value="{{selectedItem.roomPriceWorkDays}}">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomPriceHolidaysU" class="col-sm-3 col-form-label">Kambario kaina savaitgaliais</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="roomPriceHolidaysU" rows="3" #roomPriceHolidaysU value="{{selectedItem.roomPriceHolidays}}">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomTypeU" class="col-sm-3 col-form-label">Kambario tipas</label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control" id="roomTypeU" #roomTypeU value="{{selectedItem.roomType}}">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary mb-2 float-right" (click)="updatePriceList(datePriceIsValidFromU.value, roomPriceHolidaysU.value, roomPriceWorkDaysU.value, roomTypeU.value)">Prideti</button>
+                </div>
+            </div> 
+        </form>
+    </div>
+</mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+        Istrinti kainorasti
+    </ng-template>
+    <div class="form-group row">
+            <label for="feeid" class="col-sm-3 col-form-label">Pasirinkto elemento id</label>
+            <div class="col-sm-7">
+                <p>{{selectedItem.id}}</p>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 float-right" (click)="deletePriceList(selectedItem.id)">Istrinti</button>
+    </div>
+</mat-tab>
+
+</mat-tab-group>

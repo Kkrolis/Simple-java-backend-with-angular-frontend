@@ -1,0 +1,431 @@
+---
+swagger: "2.0"
+info:
+  description: PW-06 API Deffinition
+  version: 1.0.0
+  title: PW-06
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+
+host: 'localhost:8080'
+basePath: /api
+
+paths:
+
+  /residents:
+    get:
+      operationId: getResidents
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: Successful response, with a representation of the resident list.
+          schema:
+             type: array
+             items:
+              $ref: '#/definitions/Resident'
+          examples:
+            application/json: [
+              {
+                id: 1,
+                firstName: "Karolis",
+                LastName: "Krolis",
+                arivalDate: "2020-02-05",
+                stayDurration: 5,
+                roomType: "Liuxas"
+                
+              }, {
+                id: 2,
+                firstName: "Antanas",
+                LastName: "Antanaitis",
+                arivalDate: "2020-09-05",
+                stayDurration: 2,
+                roomType: "Normal"
+              }]
+    put:
+      operationId: addResident
+      consumes:
+      - 'application/json'
+      parameters:
+        - in: body
+          name: resident
+          schema:
+            $ref: '#/definitions/Resident'
+      responses:
+        200:
+          description: OK
+    post:
+      operationId: updateResident
+      consumes:
+      - application/json
+      parameters:
+        - in: body
+          name: resident
+          schema:
+            $ref: '#/definitions/Resident'
+      responses:
+        200:
+          description: OK
+
+  /residents/{residentId}:
+    delete:
+      operationId: delResident
+      parameters:
+        - in: path
+          name: residentId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the resident to delete.
+      responses:
+        200:
+          description: OK
+    get:
+      operationId: getResident
+      produces:
+      - 'application/json'
+      parameters:
+        - in: path
+          name: residentId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the resident to get.
+      responses:
+        200:
+          description: Successful response, with a representation of the resident list.
+          schema:
+             $ref: '#/definitions/Resident'
+          examples:
+            application/json: 
+              {
+                id: 1,
+                firstName: "Karolis",
+                LastName: "Krolis",
+                arivalDate: "2020-02-05",
+                stayDurration: 5,
+                roomType: "Liuxas"
+              }
+
+  /residents/upload:
+      post:
+       operationId: uploadResidentsCsv
+       summary: Uploads a Residents CSV file.
+       consumes:
+         - 'multipart/form-data'
+       parameters:
+         - in: formData
+           name: csvResidentsFile
+           type: file
+           description: The Residents CSV  file to upload.
+           x-mimetype: application/csv
+       responses:
+         200:
+           description: OK
+
+  /priceList:
+    get:
+      operationId: getPriceList
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: Successful response, with a representation of the price list.
+          schema:
+             type: array
+             items:
+              $ref: '#/definitions/PriceList'
+          examples:
+            application/json: [
+              {
+                id: 1,
+                roomTyoe: "Liux",
+                roomPriceWorkDays: 150,
+                roomPriceHolidays: 250,
+                datePriceISValidFrom: "2020-01-01"
+                
+              }, {
+                id: 2,
+                roomTyoe: "normal",
+                roomPriceWorkDays: 90,
+                roomPriceHolidays: 150,
+                datePriceISValidFrom: "2020-01-01"
+              }] 
+    put:
+      operationId: addPrice
+      consumes:
+      - 'application/json'
+      parameters:
+        - in: body
+          name: price
+          schema:
+            $ref: '#/definitions/PriceList'
+      responses:
+        200:
+          description: OK
+    post:
+      operationId: updatePriceList
+      consumes:
+      - 'application/json'
+      parameters:
+        - in: body
+          name: priceList
+          schema:
+            $ref: '#/definitions/PriceList'
+      responses:
+        200:
+          description: OK
+
+  /priceList/{priceId}:
+    delete:
+      operationId: delPrice
+      parameters:
+        - in: path
+          name: priceId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the price to delete.
+      responses:
+        200:
+          description: OK
+    get:
+      operationId: getPrice
+      produces:
+      - 'application/json'
+      parameters:
+        - in: path
+          name: priceId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the price to get.
+      responses:
+        200:
+          description: Successful response, with a representation of the price list.
+          schema:
+             $ref: '#/definitions/PriceList'
+          examples:
+            application/json: 
+              {
+                id: 1,
+                roomTyoe: "Liux",
+                roomPriceWorkDays: 150,
+                roomPriceHolidays: 250,
+                datePriceISValidFrom: "2020-01-01"
+              }
+
+  /priceList/upload:
+      post:
+       operationId: uploadPriceListCsv
+       summary: Uploads a PriceList CSV file.
+       consumes:
+         - 'multipart/form-data'
+       parameters:
+         - in: formData
+           name: csvPriceListFile
+           type: file
+           description: The PriceList CSV  file to upload.
+           x-mimetype: application/csv
+       responses:
+         200:
+           description: OK
+
+  /fee:
+    get:
+      operationId: getFees
+      produces:
+      - 'application/json'
+      responses:
+        200:
+          description: Successful response, with a representation of the fee list.
+          schema:
+             type: array
+             items:
+              $ref: '#/definitions/Fee'
+          examples:
+            application/json: [
+              {
+                id: 1,
+                firstName: "Karolis",
+                lastName: "Krolis",
+                arivalDate: "2020-01-01",
+                departureDate: "2020-01-05",
+                fee: 400
+              }, {
+                id: 2,
+                firstName: "Sigitas",
+                lastName: "Brazauskas",
+                arivalDate: "2020-05-25",
+                departureDate: "2020-05-26",
+                fee: 90
+              }] 
+    put:
+      operationId: addFee
+      consumes:
+      - 'application/json'
+      parameters:
+        - in: body
+          name: fee
+          schema:
+            $ref: '#/definitions/Fee'
+      responses:
+        200:
+          description: OK
+    post:
+      operationId: updateFee
+      consumes:
+      - 'application/json'
+      parameters:
+        - in: body
+          name: fee
+          schema:
+            $ref: '#/definitions/Fee'
+      responses:
+        200:
+          description: OK
+
+  /fee/{feeId}:
+    delete:
+      operationId: delFee
+      parameters:
+        - in: path
+          name: feeId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the fee to delete.
+      responses:
+        200:
+          description: OK
+    get:
+      operationId: getFee
+      produces:
+      - 'application/json'
+      parameters:
+        - in: path
+          name: feeId
+          type: integer
+          format: int64
+          required: true
+          description: Numeric ID of the fee to get.
+      responses:
+        200:
+          description: Successful response, with a representation of the fee list.
+          schema:
+             $ref: '#/definitions/Fee'
+          examples:
+            application/json: 
+              {
+                id: 1,
+                firstName: "Karolis",
+                lastName: "Krolis",
+                arivalDate: "2020-01-01",
+                departureDate: "2020-01-05",
+                fee: 400
+              }
+
+  /fee/upload:
+      post:
+       operationId: uploadFeeCsv
+       summary: Uploads a fee CSV file.
+       consumes:
+         - 'multipart/form-data'
+       parameters:
+         - in: formData
+           name: csvfeeFile
+           type: file
+           description: The fee CSV  file to upload.
+           x-mimetype: application/csv
+       responses:
+         200:
+           description: OK
+
+definitions:
+
+  Resident:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        x-type-options:
+          min: 1
+      firstName:
+        type: string
+        x-chance-type: first_name
+      lastName:
+        type: string
+        x-chance-type: last_name
+      arivalDate:
+        type: string
+        format: date
+        x-chance-type: date
+      stayDurration:
+        type: number
+        x-type-options:
+          min: 1
+          max: 1000
+      roomType:
+        type: string
+        x-chance-type: room_type
+        
+  PriceList:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        x-type-options:
+          min: 1
+      roomType:
+        type: string
+        x-chance-type: room_type
+      roomPriceWorkDays:
+        type: number
+        x-type-options:
+          min: 1
+          max: 100000
+      roomPriceHolidays:
+        type: number
+        x-type-options:
+          min: 1
+          max: 100000
+      datePriceIsValidFrom:
+        type: string
+        format: date
+        x-chance-type: date
+
+  Fee:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        x-type-options:
+          min: 1
+      firstName:
+        type: string
+        x-chance-type: first_name
+      lastName:
+        type: string
+        x-chance-type: last_name
+      arivalDate:
+        type: string
+        format: date
+        x-chance-type: date
+      departureDate:
+        type: string
+        format: date
+        x-chance-type: date
+      fee:
+        type: number
+        x-type-options:
+          min: 1
+          max: 10000000000
+          
+          
+          
+          

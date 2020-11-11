@@ -1,0 +1,137 @@
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+             <th scope="col">Id</th>
+             <th scope="col">Vardas</th>
+             <th scope="col">Pavarde</th>
+             <th scope="col">Kambario tipas</th>
+             <th scope="col">Atvykimo data</th>
+             <th scope="col">Kiek dienu givenama</th>
+         </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let resident of residents" (click)="selectItem(resident)">
+            <td scope="row">{{ resident.id }}</td>
+            <td>{{ resident.firstName }}</td>
+            <td>{{ resident.lastName }}</td>
+            <td>{{ resident.roomType }}</td>
+            <td>{{ resident.arivalDate}}</td>
+            <td>{{ resident.stayDurration }}</td>
+        </tr>
+        </tbody>
+    </table>
+ 
+</div>
+<mat-tab-group>
+<mat-tab label="Prideti Gyventoja">
+    <div>
+        <form class="shadow p-3 mb-5 rounded">
+            <div class="form-group row">
+                <label for="firstName" class="col-sm-3 col-form-label">Vardas</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="firstName" #firstName>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="lastName" class="col-sm-3 col-form-label">Pavarde</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id=lastName #lastName>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomtype" class="col-sm-3 col-form-label">Kambario tipas</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="roomtype" rows="3" #roomtype>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="arivalDate" class="col-sm-3 col-form-label">Atvykimo data</label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control" id="arivalDate" #arivalDate>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="stayDurration" class="col-sm-3 col-form-label">Gyvenamu dienu kiekis</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="stayDurration" rows="3" #stayDurration>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary mb-2 float-right" (click)="addResident(firstName, lastName, roomtype, arivalDate, stayDurration)">Prideti</button>
+                </div>
+            </div> 
+        </form>
+    </div>
+</mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+        Atnaujinti Gyventoja
+    </ng-template>
+    <div>
+        <form class="shadow p-3 mb-5 rounded">
+            <div class="form-group row">
+                <label for="firstNameU" class="col-sm-3 col-form-label">Vardas</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="firstNameU" #firstNameU value={{selectedItem.firstName}}>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="lastNameU" class="col-sm-3 col-form-label">Pavarde</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="lastNameU" #lastNameU value={{selectedItem.lastName}}>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="roomtypeU" class="col-sm-3 col-form-label">Kambario tipas</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="roomtypeU" rows="3" #roomtypeU value={{selectedItem.roomType}}>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="arivalDateU" class="col-sm-3 col-form-label">Atvykimo data</label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control" id="arivalDateU" #arivalDateU value={{selectedItem.arivalDate}}>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="stayDurrationU" class="col-sm-3 col-form-label">Gyvenamu dienu kiekis</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="stayDurrationU" rows="3" #stayDurrationU value={{selectedItem.stayDurration}}>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary mb-2 float-right" (click)="updateResident(firstNameU, lastNameU, roomtypeU, arivalDateU, stayDurrationU)">Atnaujinti</button>
+                </div>
+            </div> 
+        </form>
+    </div>
+</mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+        Istrinti gyventoja
+    </ng-template>
+    <div class="form-group row">
+            <label for="residentId" class="col-sm-3 col-form-label">Pasirinkto elemento id</label>
+            <div class="col-sm-7">
+                <p>{{selectedItem.id}}</p>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 float-right" (click)="deleteResident(selectedItem.id)">Istrinti</button>
+    </div>
+</mat-tab>
+
+</mat-tab-group>
